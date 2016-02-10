@@ -1,5 +1,6 @@
 ﻿using CoderCamp.Models;
 using Plugin.Share;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace CoderCamp.Views
@@ -62,9 +63,22 @@ namespace CoderCamp.Views
             {
                 Icon = "ic_share.png",
                 Text = "Share",
-                Command = new Command(async () => await CrossShare.Current
-                    .Share($"Are you going to {@event.Name}? {@event.Link}"))
+                Command = new Command(async () => await ShareEvent(@event))
             });
+        }
+
+        async Task ShareEvent(Event @event)
+        {
+            if(Device.OS == TargetPlatform.Android || Device.OS == TargetPlatform.iOS)
+            {
+                await CrossShare.Current
+                    .Share($"Are you going to {@event.Name}? {@event.Link}", @event.Name);
+            }
+            else
+            {
+                await CrossShare.Current
+                       .ShareLink(@event.Link, $"Are you going to {@event.Name}?", @event.Name);
+            }
         }
     }
 }
