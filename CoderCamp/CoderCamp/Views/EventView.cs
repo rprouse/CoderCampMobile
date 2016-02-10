@@ -32,6 +32,14 @@ namespace CoderCamp.Views
                         Source = new HtmlWebViewSource {
                             Html = @event.Description
                         }
+                    },
+                    new Button
+                    {
+                        Text = "More Info...",
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                        Command = new Command(async () => await CrossShare.Current
+                            .OpenBrowser(@event.Link)
+                        )
                     }                    
                 }
             };
@@ -40,9 +48,8 @@ namespace CoderCamp.Views
             {
                 Icon = "ic_share.png",
                 Text = "Share",
-                Command = new Command(() => 
-                    CrossShare.Current
-                        .Share($"Are you going to {@event.Name}? {@event.Link}"))
+                Command = new Command(async () => await CrossShare.Current
+                    .Share($"Are you going to {@event.Name}? {@event.Link}"))
             });
         }
     }

@@ -1,4 +1,5 @@
-﻿using CoderCamp.Views;
+﻿using Akavache;
+using CoderCamp.Views;
 
 using Xamarin.Forms;
 
@@ -8,6 +9,8 @@ namespace CoderCamp
     {
         public App()
         {
+            BlobCache.ApplicationName = "CoderCamp";
+
             // The root page of your application
             MainPage = new NavigationPage(new EventListView());
         }

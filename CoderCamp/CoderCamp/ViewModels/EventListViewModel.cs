@@ -1,10 +1,14 @@
-﻿using CoderCamp.Models;
+﻿using Akavache;
+using CoderCamp.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
+using System.Net.Http.Headers;
+using System.Reactive.Linq;
+using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Xamarin.Forms;
@@ -16,6 +20,7 @@ namespace CoderCamp.ViewModels
         const string FEED_URI = "http://www.codercamphamilton.com/rss.xml";
 
         Page _page;
+        string _version = typeof(EventListViewModel).GetTypeInfo().Assembly.GetName().Version.ToString(3);
 
         public ObservableCollection<Event> Events { get; } 
             = new ObservableCollection<Event>();
@@ -24,34 +29,46 @@ namespace CoderCamp.ViewModels
 
         public EventListViewModel(Page page)
         {
-            LoadEventsCommand = new Command(async () => await LoadEventsAsync());
-
+            LoadEventsCommand = new Command(() => LoadEvents());
             _page = page;
         }
 
-        async Task LoadEventsAsync()
+        void LoadEvents()
         {
             if (IsBusy)
                 return;
 
             IsBusy = true;
+
+            // This call first fetches the RSS feed from the cache if it exists, then downloads
+            // the RSS feed in the background
+            BlobCache.UserAccount.GetAndFetchLatest<string>("Events", async () => await DownloadRss())
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(async events => await LoadEventsFromRss(events), () => IsBusy = false);
+        }
+
+        async Task<string> DownloadRss()
+        {
             try
             {
                 using (var http = new HttpClient())
                 {
-                    var rss = await http.GetStringAsync(FEED_URI);
-                    await LoadEventsFromRss(rss);
+                    http.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("CoderCampMobile", _version));
+                    return await http.GetStringAsync(FEED_URI);
                 }
             }
             catch
             {
                 await _page.DisplayAlert("Error", "Unable to load events.", "OK");
+                return null;
             }
-            IsBusy = false;
         }
 
         async Task LoadEventsFromRss(string rss)
         {
+            if (string.IsNullOrWhiteSpace(rss))
+                return; // We failed to download?
+
             var events = await ParseRss(rss);
             Events.Clear();
             foreach (var @event in events)
