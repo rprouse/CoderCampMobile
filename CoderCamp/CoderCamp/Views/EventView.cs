@@ -20,7 +20,7 @@ namespace CoderCamp.Views
                 Children = {
                     new StackLayout {
                     HorizontalOptions = LayoutOptions.FillAndExpand,
-                    Padding = new Thickness(10, 20, 10, 40),                    
+                    Padding = new Thickness(10, 20, 10, 40),
                     BackgroundColor = Color.FromRgb(0x5F, 0x00, 0x0B),
                     Children = {
                             new Label {
@@ -47,8 +47,8 @@ namespace CoderCamp.Views
                         Text = "Register",
                         TextColor = Color.White,
                         BackgroundColor = Color.FromRgb(0x2B, 0x8D, 0x11),
-                        BorderColor = Color.FromRgb(0x24, 0x76, 0x0E),
-                        BorderWidth = 4,
+                        BorderColor = Color.FromRgb(0x2B, 0x8D, 0x11),
+                        BorderWidth = 0,
                         BorderRadius = 0,
                         HorizontalOptions = LayoutOptions.FillAndExpand,
                         Command = new Command(async () => await CrossShare.Current
