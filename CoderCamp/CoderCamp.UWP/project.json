@@ -2,6 +2,7 @@
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "Newtonsoft.Json": "8.0.2",
+    "Plugin.Share": "3.3.5",
     "Rx-Main": "2.2.5",
     "Xamarin.Forms": "2.0.1.6505"
   },

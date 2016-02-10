@@ -40,7 +40,6 @@ namespace CoderCamp.ViewModels
                 using (var http = new HttpClient())
                 {
                     var rss = await http.GetStringAsync(FEED_URI);
-
                     await LoadEventsFromRss(rss);
                 }
             }
