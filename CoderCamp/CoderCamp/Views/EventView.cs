@@ -45,6 +45,11 @@ namespace CoderCamp.Views
                     new Button
                     {
                         Text = "More Info...",
+                        TextColor = Color.White,
+                        BackgroundColor = Color.FromRgb(0x2B, 0x8D, 0x11),
+                        BorderColor = Color.FromRgb(0x24, 0x76, 0x0E),
+                        BorderWidth = 4,
+                        BorderRadius = 0,
                         HorizontalOptions = LayoutOptions.FillAndExpand,
                         Command = new Command(async () => await CrossShare.Current
                             .OpenBrowser(@event.Link)
