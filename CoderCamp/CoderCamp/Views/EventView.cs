@@ -10,7 +10,6 @@ namespace CoderCamp.Views
         public EventView(Event @event)
         {
             Title = "CoderCamp";
-            Padding = new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0);
 
             Content = new StackLayout
             {

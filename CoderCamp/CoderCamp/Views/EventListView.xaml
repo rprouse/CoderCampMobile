@@ -5,11 +5,6 @@
              Padding="10"
              Title="CoderCamp"
              IsBusy="{Binding IsBusy}">
-    <ContentPage.Padding>
-        <OnPlatform x:TypeArguments="Thickness">
-            <OnPlatform.iOS>0, 20, 0, 0</OnPlatform.iOS>
-        </OnPlatform>
-    </ContentPage.Padding>
     <ListView x:Name="listView"              
               CachingStrategy="RecycleElement"
               VerticalOptions="FillAndExpand"
