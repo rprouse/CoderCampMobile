@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
 using UIKit;
+using Xamarin;
 
 namespace CoderCamp.iOS
 {
@@ -22,6 +19,7 @@ namespace CoderCamp.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Insights.Initialize(App.XamarinInsightsKey);
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 

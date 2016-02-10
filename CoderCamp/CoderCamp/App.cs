@@ -7,6 +7,8 @@ namespace CoderCamp
 {
     public class App : Application
     {
+        public const string XamarinInsightsKey = "2bf0f9618920763f065335f1f36ddc6282ca4061";
+
         public App()
         {
             BlobCache.ApplicationName = "CoderCamp";
