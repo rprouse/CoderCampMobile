@@ -1,5 +1,6 @@
 ﻿using Akavache;
 using CoderCamp.Models;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,11 +41,12 @@ namespace CoderCamp.ViewModels
 
             IsBusy = true;
 
-            // This call first fetches the RSS feed from the cache if it exists, then downloads
-            // the RSS feed in the background
-            BlobCache.UserAccount.GetAndFetchLatest("Events", async () => await DownloadRss())
-                .ObserveOn(SynchronizationContext.Current)
-                .Subscribe(async events => await LoadEventsFromRss(events), () => IsBusy = false);
+            IObservable<string> observable = CrossConnectivity.Current.IsConnected ?
+                BlobCache.UserAccount.GetAndFetchLatest(FEED_URI, async () => await DownloadRss()) :   // Fetch from cache, then Internet
+                BlobCache.UserAccount.GetObject<string>(FEED_URI); // Not connected to the Internet, fetch from cache only
+
+            observable.ObserveOn(SynchronizationContext.Current)
+                    .Subscribe(async events => await LoadEventsFromRss(events), () => IsBusy = false);
         }
 
         async Task<string> DownloadRss()
