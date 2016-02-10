@@ -9,22 +9,31 @@ namespace CoderCamp.Views
         public EventView(Event @event)
         {
             Title = "CoderCamp";
+            Padding = new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0);
 
             Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Padding = new Thickness(10),
                 BackgroundColor = Color.White,
 
                 Children = {
-                    new Label {
-                        Text = @event.Name,
-                        FontSize = Device.GetNamedSize (NamedSize.Large, typeof(Label))
-                    },
-                    new Label {
-                        Text = @event.Date,
-                        FontAttributes = FontAttributes.Italic
+                    new StackLayout {
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    Padding = new Thickness(10, 20, 10, 40),                    
+                    BackgroundColor = Color.FromRgb(0x5F, 0x00, 0x0B),
+                    Children = {
+                            new Label {
+                                Text = @event.Name,
+                                TextColor = Color.White,
+                                FontSize = Device.GetNamedSize (NamedSize.Large, typeof(Label))
+                            },
+                            new Label {
+                                Text = @event.Date,
+                                TextColor = Color.White,
+                                FontAttributes = FontAttributes.Italic
+                            }
+                        }
                     },
                     new WebView {
                         VerticalOptions = LayoutOptions.FillAndExpand,
@@ -40,7 +49,7 @@ namespace CoderCamp.Views
                         Command = new Command(async () => await CrossShare.Current
                             .OpenBrowser(@event.Link)
                         )
-                    }                    
+                    }
                 }
             };
 
