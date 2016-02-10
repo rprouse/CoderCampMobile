@@ -1,4 +1,5 @@
-﻿using CoderCamp.ViewModels;
+﻿using CoderCamp.Models;
+using CoderCamp.ViewModels;
 
 using Xamarin.Forms;
 
@@ -19,7 +20,7 @@ namespace CoderCamp.Views
             {
                 if (listView.SelectedItem == null)
                     return;
-                //this.Navigation.PushAsync(new EventDetailsView(listView.SelectedItem as Event));
+                Navigation.PushAsync(new EventView(listView.SelectedItem as Event));
                 listView.SelectedItem = null;
             };
         }

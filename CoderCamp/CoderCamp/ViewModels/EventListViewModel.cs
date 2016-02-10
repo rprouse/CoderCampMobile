@@ -41,12 +41,7 @@ namespace CoderCamp.ViewModels
                 {
                     var rss = await http.GetStringAsync(FEED_URI);
 
-                    var events = await ParseRss(rss);
-                    Events.Clear();
-                    foreach(var @event in events)
-                    {
-                        Events.Add(@event);
-                    }
+                    await LoadEventsFromRss(rss);
                 }
             }
             catch
@@ -54,6 +49,16 @@ namespace CoderCamp.ViewModels
                 await _page.DisplayAlert("Error", "Unable to load events.", "OK");
             }
             IsBusy = false;
+        }
+
+        async Task LoadEventsFromRss(string rss)
+        {
+            var events = await ParseRss(rss);
+            Events.Clear();
+            foreach (var @event in events)
+            {
+                Events.Add(@event);
+            }
         }
 
         async Task<IEnumerable<Event>> ParseRss(string rss) =>
