@@ -42,7 +42,7 @@ namespace CoderCamp.ViewModels
 
             // This call first fetches the RSS feed from the cache if it exists, then downloads
             // the RSS feed in the background
-            BlobCache.UserAccount.GetAndFetchLatest<string>("Events", async () => await DownloadRss())
+            BlobCache.UserAccount.GetAndFetchLatest("Events", async () => await DownloadRss())
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(async events => await LoadEventsFromRss(events), () => IsBusy = false);
         }

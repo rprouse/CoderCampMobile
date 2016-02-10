@@ -5,6 +5,8 @@
     "Newtonsoft.Json": "8.0.2",
     "Plugin.Share": "3.3.5",
     "Rx-Main": "2.2.5",
+    "Splat": "1.6.2",
+    "SQLitePCL.raw_basic": "0.8.6",
     "Xamarin.Forms": "2.0.1.6505"
   },
   "frameworks": {
