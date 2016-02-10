@@ -25,7 +25,7 @@ namespace CoderCamp.Models
             {
                 DateTime dt;
                 if (DateTime.TryParse(value, out dt))
-                    _date = dt.ToLocalTime().ToString("D");
+                    _date = dt.ToUniversalTime().ToString("D");
                 else
                     _date = value;
             }
